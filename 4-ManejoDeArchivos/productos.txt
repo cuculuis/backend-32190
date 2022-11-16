@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Pan de coco",
+    "price": 20,
+    "thumbnail": "/img/img2.png",
+    "id": 2
+  },
+  {
+    "title": "Pan de jamón",
+    "price": 100,
+    "thumbnail": "/img/img3.png",
+    "id": 3
+  }
+]
+    "title": "Pan de jamón",
+    "price": 100,
+    "thumbnail": "/img/img3.png",
+    "id": 3
+  }
+]

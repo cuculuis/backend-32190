@@ -1,127 +1,93 @@
-const fs = require('fs');
+const fs = require('fs')
 
 class Contenedor {
-    productArray = new Array();
-    typeId;
 
-
-    constructor(fileName) {
-        this.fileName = fileName;
-
-        if (fs.existsSync(fileName)) {
-            this.productArray = JSON.parse(fs.readFileSync(this.fileName, "utf-8"));
-            this.typeId = this.#detId();
-            console.log("Archivo Existente");
-        } else {
-            this.typeId = 0;
-            fs.writeFileSync(this.fileName, JSON.stringify(this.productArray));    
-            console.log("Archivo NO existente");
-        }
+    constructor(filename) {
+        this.filename = filename
+        
+        this.products = []
+        this.nextID = 1
     }
 
-    #detId() {
-        if (this.productArray.length > 0) {
-            let riseId = this.productArray.reduce((acc, item) => {
-                return Math.max(acc, item.id)
-            }, 0)
-            return riseId + 1;
-        } else {
-            return 0;
-        }
-    }
-
-    async save(Object) {
+    async init() {
         try {
-            if (!this.#thisIs(Object)) {
-                Object["id"] = this.typeId + 1;
-                this.typeId++;
-                this.productArray.push(Object);
-                await fs.promises.writeFile(this.fileName, JSON.stringify(this.productArray));
-                console.log("Se ha guardado el desayuno: " + Object.id + ".");
-                return Promise.resolve(Object.id);
+            const data = await this.readFile()
+            if (data.length > 0) {
+                this.products = data
+                this.nextID = this.products[data.length-1].id + 1
+                console.log('Data loaded from file')
             }
-            else {
-                console.log("Se han guardado los cambios");
-            }
-        }
-        catch (error) {
-            console.log(error);
+        } catch(e) {
+            console.log('No se pudo leer la data')
         }
     }
 
-    #thisIs(obje) {
-        let resp = false;
-        this.productArray.filter(component => {
-            if (component.title == obje.title && component.price == obje.price && component.img == obje.img) {
-                resp = true;
-            }
-        });
-        return resp;
+    async save(obj) {
+        obj.id = this.nextID
+        this.products.push(obj)
+        this.nextID++
+
+        try{
+            await this.saveFile()
+        } catch(e) {
+            console.log(e)
+        }
+    }
+
+    getAll() {
+        return this.products
+    }
+
+    saveFile() {
+        return fs.promises.writeFile(this.filename, JSON.stringify(this.products, null, 2))
     }
 
     getById(id) {
-        return this.productArray.find(p => p.id == id) || null
-    }
-
-    async getAll() {
-        try {
-            const data = await fs.promises.readFile(this.fileName, "utf-8");
-            this.productArray = JSON.parse(data);
-            console.log(this.productArray);
-
-        }
-        catch (error) {
-            console.log(error);
-        }
+        const data = this.products.find(p => p.id == id)
+        
+        return data ? data : null
     }
 
     async deleteById(id) {
+        const idx = this.products.findIndex(p => p.id == id)
+        this.products.splice(idx, 1)
 
-        this.productArray = this.productArray.filter(p => p.id !== id)
-
-        try {
-            await fs.promises.writeFile(this.fileName, JSON.stringify(this.productArray))
-            return { id }
-        }
-        catch (error) {
-            console.log(error);
-        }
-
-    }
-
-    async deleteAll() {
-        this.productArray = [];
-        try {
-            await fs.promises.writeFile(this.fileName, JSON.stringify(this.productArray))
-            console.log("Todo borrado");
-        }
-        catch (error) {
-            console.log(error);
+        try{
+            await this.saveFile()
+        } catch(e) {
+            console.log(e)
         }
     }
+
+    async deleteAll(){
+        try {
+            await fs.promises.writeFile(this.filename, [])
+            console.log("Borrado!")
+        } catch (error) {
+            console.log('No se han podido borrar todos los objetos.');
+        }
+    }
+
+    readFile() {
+        return fs.promises.readFile(this.filename, 'utf-8')
+            .then(data => JSON.parse(data))
+            .catch(e => (console.log(e)))
+    }
+
 }
 
+const pancito = new Contenedor('productos.txt')
 
-
-
-let desayuno = { title: "Desayuno Caja de Madera", price: 20, img: "./producto1.jpg" };
-let desayuno2 = { title: "Desayuno Romántico", price: 10, img: "./producto2.jpg" };
-let desayuno3 = { title: "Desayuno Cumpleaños", price: 4.000, img: "./producto3.jpg" };
-let desayuno4 = { title: "Desayuno Cumpleaños", price: 4.000, img: "./producto3.jpg" };
-
-
-
-const desayunosCordoba = new Contenedor("./productos.txt");
-action = () => {
-
-    desayunosCordoba.getAll()
-        .then(() => desayunosCordoba.save(desayuno))
-        .then(() => desayunosCordoba.save(desayuno2))
-        .then(() => desayunosCordoba.save(desayuno3))
-        .then(() => desayunosCordoba.save(desayuno4))
-        .then(() => {
-            console.log(desayunosCordoba.getById(8));
-        })
+async function mostrarDesafio(){
+    pancito.save({title: 'Pan de maiz', price: 50, thumbnail: '/img/img1.png'});
+    pancito.save({title: 'Pan de coco', price: 20, thumbnail: '/img/img2.png'});
+    pancito.save({title: 'Pan de jamón', price: 100, thumbnail: '/img/img3.png'});
+    let productos = await pancito.getAll();
+    console.log(productos);
+    const producto = await pancito.getById(2);
+    console.log(producto);
+    const borrado = await pancito.deleteById(1)
+    
 }
 
-action();
+mostrarDesafio();
