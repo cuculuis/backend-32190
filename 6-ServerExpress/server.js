@@ -16,7 +16,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/productos', async (req, res) => {
-        res.send(await productos.getAll())
+        const prds = await productos.getAll();
+        res.send(prds)
         });
 
 app.get('/productoRandom', async (req, res) => {

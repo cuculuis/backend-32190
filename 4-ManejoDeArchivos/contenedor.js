@@ -1,93 +1,135 @@
-const fs = require('fs')
+const fs = require('fs');
 
 class Contenedor {
-
     constructor(filename) {
-        this.filename = filename
-        
-        this.products = []
-        this.nextID = 1
+        this.filename = filename;
+        this.nextId = 1;
     }
 
-    async init() {
+    async save(object) {
         try {
-            const data = await this.readFile()
-            if (data.length > 0) {
-                this.products = data
-                this.nextID = this.products[data.length-1].id + 1
-                console.log('Data loaded from file')
+            let data = await fs.promises.readFile(this.filename, 'utf8');
+
+            if (!data) {
+                data = {};
+            } else {
+                data = JSON.parse(data);
             }
-        } catch(e) {
-            console.log('No se pudo leer la data')
+    
+            object.id = this.nextId++;
+            data[object.id] = object;
+            
+            await fs.promises.writeFile(this.filename, JSON.stringify(data, null, 2));
+    
+            return object.id;
+
+            } catch (e) {
+                console.log("Hubo el siguiente error: " + e);
+            }
+    }
+
+    async getById(id) {
+        try {
+            let data = await fs.promises.readFile(this.filename, 'utf8');
+    
+            if (!data) {
+                return null;
+            }
+    
+            data = JSON.parse(data);
+    
+            return data[id] || null;
+            
+        } catch (e) {
+            console.log("Hubo el siguiente error: " + e);
         }
     }
 
-    async save(obj) {
-        obj.id = this.nextID
-        this.products.push(obj)
-        this.nextID++
-
-        try{
-            await this.saveFile()
-        } catch(e) {
-            console.log(e)
+    async getAll() {
+        try {
+            let data = await fs.promises.readFile(this.filename, 'utf8');
+    
+            if (!data) {
+                return [];
+            }
+            return Object.values(JSON.parse(data));
+            
+        } catch (e) {
+            console.log("Hubo el siguiente error: " + e);
         }
-    }
-
-    getAll() {
-        return this.products
-    }
-
-    saveFile() {
-        return fs.promises.writeFile(this.filename, JSON.stringify(this.products, null, 2))
-    }
-
-    getById(id) {
-        const data = this.products.find(p => p.id == id)
-        
-        return data ? data : null
     }
 
     async deleteById(id) {
-        const idx = this.products.findIndex(p => p.id == id)
-        this.products.splice(idx, 1)
-
-        try{
-            await this.saveFile()
-        } catch(e) {
-            console.log(e)
-        }
-    }
-
-    async deleteAll(){
         try {
-            await fs.promises.writeFile(this.filename, [])
-            console.log("Borrado!")
-        } catch (error) {
-            console.log('No se han podido borrar todos los objetos.');
+            let data = await fs.promises.readFile(this.filename, 'utf8');
+            
+            if (!data) {
+                return;
+            }
+    
+            data = JSON.parse(data);
+            
+            delete data[id];
+    
+            await fs.promises.writeFile(this.filename, JSON.stringify(data, null, 2));
+
+        } catch (e) {
+            console.log("Hubo el siguiente error: " + e);
         }
     }
 
-    readFile() {
-        return fs.promises.readFile(this.filename, 'utf-8')
-            .then(data => JSON.parse(data))
-            .catch(e => (console.log(e)))
-    }
+    async deleteAll() {
+        try {
+            await fs.promises.writeFile(this.filename, '');
+            console.log("¡Borrado!");
+            } catch (e) {
+                console.log("Hubo el siguiente error: " + e);
+            }
+        }
 
 }
 
-const pancito = new Contenedor('productos.txt')
 
-async function mostrarDesafio(){
-    pancito.save({title: 'Pan de maiz', price: 50, thumbnail: '/img/img1.png'});
-    pancito.save({title: 'Pan de coco', price: 20, thumbnail: '/img/img2.png'});
-    pancito.save({title: 'Pan de jamón', price: 100, thumbnail: '/img/img3.png'});
-    let productos = await pancito.getAll();
-    console.log(productos);
-    const producto = await pancito.getById(2);
-    console.log(producto);
-    const borrado = await pancito.deleteById(1)
+const mercado = new Contenedor('productos.txt');
+
+
+const obj1 = { nombre: 'Pan', precio: 30, thumbnail: '/img/img1.png' };
+const obj2 = { nombre: 'Leche', precio: 25, thumbnail: '/img/img2.png' };
+const obj3 = { nombre: 'Manteca', precio: 35, thumbnail: '/img/img3.png' };
+
+async function test() {
     
+    console.log("Prueba de save");
+    console.log(await mercado.save(obj1));  
+    console.log(await mercado.save(obj2));  
+    console.log(await mercado.save(obj3));  
+    
+    console.log("-----------------------------------------------------");
+    
+    console.log("Prueba getById");
+    console.log(await mercado.getById(2));  
+    console.log(await mercado.getById(1));  
+    console.log(await mercado.getById(3));  
+    console.log(await mercado.getById(4));  
+    
+    console.log("-----------------------------------------------------");
+    
+    console.log("Prueba de getAll");
+    console.log(await mercado.getAll());
+    
+    console.log("-----------------------------------------------------");
+    
+    console.log("Prueba de deleteById");
+    await mercado.deleteById(2);
+    console.log(await mercado.getAll());
+    
+    console.log("-----------------------------------------------------");
+    
+    console.log("Prueba de deleteAll");
+    await mercado.deleteAll();
+    console.log(await mercado.getAll());
+    
+    console.log("-----------------------------------------------------");
 }
 
-mostrarDesafio();
+test();
