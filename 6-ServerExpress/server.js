@@ -22,15 +22,16 @@ const guardandoproductos =  async () => {
 
 guardandoproductos();
 
-app.get('/productos', (req, res) => {
-    const allProductos = productos.getAll();
-    res.send(allProductos);
+app.get('/productos', async (req, res) => {
+    const allProductos = await productos.getAll();
+    res.send({productos: allProductos});
 });
 
-app.get('/productoRandom', (req, res) => {
-    const index = Math.floor(Math.random() * productos.length + 1);
-    const productoId = productos.getById(index);
-    res.send(productoId);
+app.get('/productoRandom', async (req, res) => {
+    const allProductos = await productos.getAll();
+    const index = parseInt(Math.floor((Math.random() * allProductos.length) + 1));
+    const productoId = await productos.getById(index);
+    res.send({productoRandom: productoId});
 });
 
 
