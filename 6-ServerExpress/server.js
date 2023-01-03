@@ -1,32 +1,41 @@
-const Contenedor = require('./src/contenedor.js');
-const productos = new Contenedor('./src/productos.txt')
-
-async () => {
-    await productos.save({title: 'Pan de maiz', price: 50, thumbnail: '/img/img1.png'});
-    await productos.save({title: 'Pan de coco', price: 20, thumbnail: '/img/img2.png'});
-    await productos.save({title: 'Pan de jamón', price: 100, thumbnail: '/img/img3.png'});
-};
-
+const Contenedor = require('./src/contenedor.js')
 const express = require('express');
-const app = express()
+const app = express();
 const PORT = 8080;
 
-app.get('/', (req, res) => {
-    res.send(`<h1 style='color: blue;'>Bienvenidos a la super clase de servidores</h1>`)
-})
+const productos = new Contenedor('./src/productos.txt');
 
-app.get('/productos', async (req, res) => {
-        const prds = await productos.getAll();
-        res.send(prds)
-        });
+const obj1 = { nombre: 'Pan', precio: 30, thumbnail: '/img/img1.png' };
+const obj2 = { nombre: 'Leche', precio: 25, thumbnail: '/img/img2.png' };
+const obj3 = { nombre: 'Manteca', precio: 35, thumbnail: '/img/img3.png' };
+const obj4 = { nombre: 'Pera', precio: 10, thumbnail: '/img/img4.png' };
+const obj5 = { nombre: 'Goma', precio: 2, thumbnail: '/img/img5.png' };
 
-app.get('/productoRandom', async (req, res) => {
-        let randomNumber = Math.floor((Math.random() * 3) + 1)
-        res.json(await productos.getById(randomNumber));
-        });
+const guardandoproductos =  async () => {
+
+    await productos.save(obj1);
+    await productos.save(obj2);
+    await productos.save(obj3);
+    await productos.save(obj4);
+    await productos.save(obj5);
+    }
+
+guardandoproductos();
+
+app.get('/productos', (req, res) => {
+    const allProductos = productos.getAll();
+    res.send(allProductos);
+});
+
+app.get('/productoRandom', (req, res) => {
+    const index = Math.floor(Math.random() * productos.length + 1);
+    const productoId = productos.getById(index);
+    res.send(productoId);
+});
+
 
 const server = app.listen(PORT, () => {
-    console.log('Se ha iniciado el server en el puerto: ' + PORT)
-})
+    console.log('Servidor iniciado en el puerto 8080');
+});
 
 server.on('error', (error) => console.error(error));
