@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso de productos</title>
+</head>
+<body>
+    <h3>Ingresa un producto</h3>
+    <form action="/api/productos" method="POST" id="form-product">
+        <label for="input-title">Nombre del producto:</label><br>
+        <input type="text" id="input-title" name="title"><br>
+        <label for="input-price">Precio:</label><br>
+        <input type="number" id="input-price" name="price"><br>
+        <label for="input-thumbnail">Foto del producto (URL):</label><br>
+        <input type="text" id="input-thumbnail" name="thumbnail"><br><br>
+        <button type="submit">Agregar producto</button>
+    </form>       
+</body>
+</html>
