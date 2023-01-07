@@ -24,7 +24,7 @@ class ManejoDeProductos {
             return { error: 'producto no encontrado.' }
         }
 
-        return this.productos[id]
+        return producto
     }
 
     add(producto) {
@@ -40,7 +40,7 @@ class ManejoDeProductos {
             return { error: 'producto no encontrado.'}
         };
 
-        this.productos[index] = productoNow;
+        this.productos[index] = {...productoNow, id: id};
         return this.productos[index];
     }
 
@@ -50,7 +50,7 @@ class ManejoDeProductos {
             return { error: 'producto no encontrado.'}
         };
 
-        this.productos.splice(1, index);
+        this.productos.splice(index, 1);
         return {}
     }
 }
@@ -77,8 +77,9 @@ apiRouter.put('/:id', (req, res) => {
     });
         
 apiRouter.delete('/:id', (req, res) => {
+    const index = parseInt(req.params.id)
     mercadito.delete(parseInt(req.params.id));
-    res.json({});
+    res.json('Producto borrado del indice: ' + index);
     });
 
 
