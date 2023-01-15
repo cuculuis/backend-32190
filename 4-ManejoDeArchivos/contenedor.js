@@ -1,96 +1,84 @@
 const fs = require('fs');
 
 class Contenedor {
-    constructor(filename) {
-        this.filename = filename;
-        this.nextId = 1;
+    constructor(fileName) {
+        this.fileName = fileName;
+        this.lastId = 1;
+        this.checkFileExists()
     }
-
-    async save(object) {
+    
+    async checkFileExists() {
         try {
-            let data = await fs.promises.readFile(this.filename, 'utf8');
-
-            if (!data) {
-                data = {};
-            } else {
-                data = JSON.parse(data);
-            }
-    
-            object.id = this.nextId++;
-            data[object.id] = object;
-            
-            await fs.promises.writeFile(this.filename, JSON.stringify(data, null, 2));
-    
-            return object.id;
-
-            } catch (e) {
-                console.log("Hubo el siguiente error: " + e);
-            }
-    }
-
-    async getById(id) {
-        try {
-            let data = await fs.promises.readFile(this.filename, 'utf8');
-    
-            if (!data) {
-                return null;
-            }
-    
-            data = JSON.parse(data);
-    
-            return data[id] || null;
-            
-        } catch (e) {
-            console.log("Hubo el siguiente error: " + e);
+        await fs.promises.access(this.fileName);
+        } catch (err) {
+            await fs.promises.writeFile(this.fileName, "[]")
+            console.log(`El archivo ${this.fileName} no existe`);
         }
     }
 
-    async getAll() {
-        try {
-            let data = await fs.promises.readFile(this.filename, 'utf8');
-    
-            if (!data) {
-                return [];
+        async save(object) {
+            await this.checkFileExists()
+            try {
+                let data = await this.getAll();
+                object.id = this.lastId;
+                data.push(object);
+                this.lastId++;
+                await fs.promises.writeFile(this.fileName, JSON.stringify(data, null, 2));
+                return object.id;
+            } catch (err) {
+                console.log('Hubo un error: ' + err);
             }
-            return Object.values(JSON.parse(data));
-            
-        } catch (e) {
-            console.log("Hubo el siguiente error: " + e);
+        }
+    
+        async getById(id) {
+            await this.checkFileExists()
+            try {
+                let data = await this.getAll();
+                let object = data.find((item) => item.id === id);
+                if (object) {
+                    return object;
+                } else {
+                    return null;
+                }
+            } catch (err) {
+                console.log('Hubo un error: ' + err);
+            }
+        }
+    
+        async deleteById(id) {
+            await this.checkFileExists()
+            try {
+                let data = await this.getAll()
+                let newData = data.filter((item) => item.id !== id)
+                await fs.promises.writeFile(this.fileName, JSON.stringify(newData))
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        async getAll() {
+            await this.checkFileExists()    
+            try {
+                let data = await fs.promises.readFile(this.fileName, 'utf-8');
+                return JSON.parse(data);
+            } catch (err) {
+                console.log('Hubo un error: ' + err);
+            }
+        }
+    
+        async deleteAll() {
+            await this.checkFileExists()
+            try {
+                await fs.promises.writeFile(this.fileName, '[]');
+                this.lastId = 1;
+            } catch (err) {
+                console.log('Hubo un error: ' + err);
+            }
         }
     }
 
-    async deleteById(id) {
-        try {
-            let data = await fs.promises.readFile(this.filename, 'utf8');
-            
-            if (!data) {
-                return;
-            }
-    
-            data = JSON.parse(data);
-            
-            delete data[id];
-    
-            await fs.promises.writeFile(this.filename, JSON.stringify(data, null, 2));
 
-        } catch (e) {
-            console.log("Hubo el siguiente error: " + e);
-        }
-    }
-
-    async deleteAll() {
-        try {
-            await fs.promises.writeFile(this.filename, '');
-            console.log("¡Borrado!");
-            } catch (e) {
-                console.log("Hubo el siguiente error: " + e);
-            }
-        }
-
-}
-
-
-const mercado = new Contenedor('productos.txt');
+const mercado = new Contenedor('./productos.txt');
 
 
 const obj1 = { nombre: 'Pan', precio: 30, thumbnail: '/img/img1.png' };
@@ -120,7 +108,7 @@ async function test() {
     console.log("-----------------------------------------------------");
     
     console.log("Prueba de deleteById");
-    await mercado.deleteById(2);
+    console.log(await mercado.deleteById(2));
     console.log(await mercado.getAll());
     
     console.log("-----------------------------------------------------");
