@@ -13,21 +13,22 @@ header
             li.nav-item
             a.navbar-brand(href='/') Ingresar producto
     .container.mt-3.d-flex.justify-content-center.flex-column.align-items-center
-        h1(style='color:blue;') Ingrese datos
-        br
-        form(action='/productos' method='post')
-        .form-group
-            label(for='nombre')
-            b Nombre
-            input#nombre.form-control(type='text' name='nombre')
-        .form-group
-            label(for='precio')
-            b Precio
-            input#precio.form-control(type='number' name='precio')
-        .form-group
-            label(for='url')
-            b URL img
-            input#url.form-control(type='text' name='thumbnail')
-            button.btn.btn-success.mt-3.mb-5 Enviar
+        .container.mt-3.d-flex.justify-content-center.flex-column.align-items-center
+            .text-bg-light(style='padding: 0rem 2rem;')
+                h2(style='color:blue;') Ingrese Producto
+                form#form(action='/productos' method='post' style='display: flex; justify-content: center; align-items: center; flex-direction: column;')
+                    .form-group
+                        label(for='nombre')
+                        b Title
+                        input.form-control(type='text' name='title' required='')
+                    .form-group
+                        label(for='apellido')
+                        b Price
+                        input.form-control(type='number' name='price' required='')
+                    .form-group
+                        label(for='thumbnail')
+                        b Thumbnail
+                        input.form-control(type='text' name='thumbnail' required='')
+                    button.btn.btn-success.mt-3.mb-5 Enviar
 
 block producto
