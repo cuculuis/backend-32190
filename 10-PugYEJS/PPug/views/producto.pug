@@ -11,11 +11,11 @@ block producto
                     th(scope='col') Precio
                     th(scope='col') Imagen
                 tbody
-                    each i in productos.length 
+                    each producto in productos.length 
                         tr
-                            td= i.nombre
-                            td= i.precio
+                            td= producto.nombre
+                            td= producto.precio
                             td
-                                img(style="width: 60px", src=i.thumbnail, alt=i.nombre)
+                                img(style="width: 60px", src=producto.thumbnail, alt=producto.nombre)
         else
             h4.alert.alert-danger.container NO HAY PRODUCTOS
