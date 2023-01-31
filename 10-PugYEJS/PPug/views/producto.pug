@@ -3,19 +3,17 @@ extends body
 block producto
         if listExists
             h3(style='color:blue;') LISTA DE PRODUCTOS
-            .table-responsive.container
-            table.table.table-success
-                thead
-                tr
+            .container.table-responsive
+            table.table.table-dark
+                tr(style="color: yellow;")
                     th(scope='col') Producto
                     th(scope='col') Precio
                     th(scope='col') Imagen
-                tbody
-                    each producto in productos.length 
-                        tr
-                            td= producto.nombre
-                            td= producto.precio
-                            td
-                                img(style="width: 60px", src=producto.thumbnail, alt=producto.nombre)
+                each n in productos 
+                    tr(style="color: white;")
+                        td= n.nombre
+                        td= n.price
+                        td
+                            img(style="width: 60px", src=n.thumbnail, alt=n.nombre)
         else
             h4.alert.alert-danger.container NO HAY PRODUCTOS

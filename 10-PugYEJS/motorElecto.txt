@@ -1,0 +1,3 @@
+La verdad, no tengo preferencia por ninguno... Todos me parecen buenos, aunque si es verdad que esta bueno que en EJS no se modifique tanto el lenguaje HTML y se pueda usar JS sin muchas modificaciones. Por lo que para mi Proyecto me iré por el camino de EJS.
+
+Admito que le agarré cariño a PUG solo porque fue el que más dolores me dio de cabeza jaja. Pero bueno... no estoy para esos trotes ahorita. Capaz más tarde.

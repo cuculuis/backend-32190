@@ -15,16 +15,12 @@ app.set('view engine', 'pug');
 app.get('/productos', (req, res) => {
     let exist = productos.length > 0;
     res.render('producto', { productos: productos, listExists: exist});
-    console.log(productos);
 })
 
 app.post('/productos', (req, res) => {
     productos.push(req.body)
     res.redirect('/productos')
 })
-
-
-
 
 
 const server = app.listen(PORT, () => {

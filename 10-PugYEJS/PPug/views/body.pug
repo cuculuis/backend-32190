@@ -10,20 +10,20 @@ head
     .container.mt-3.d-flex.justify-content-center.flex-column.align-items-center
         .container.mt-3.d-flex.justify-content-center.flex-column.align-items-center
             .text-bg-light(style='padding: 0rem 2rem;')
-                h2(style='color:blue;') Ingrese Producto
-                form#form(action='/productos' method='post' style='display: flex; justify-content: center; align-items: center; flex-direction: column;')
+                h2(style='color:blue;') Agrega productos
+                form#form(action='/productos' method='post')
                     .form-group
                         label(for='nombre')
-                        b Title
-                        input.form-control(type='text' name='title' required='')
+                        b Producto
+                        input.form-control(type='text' name='nombre' required='')
                     .form-group
-                        label(for='apellido')
-                        b Price
+                        label(for='price')
+                        b Precio
                         input.form-control(type='number' name='price' required='')
                     .form-group
                         label(for='thumbnail')
                         b Thumbnail
                         input.form-control(type='text' name='thumbnail' required='')
-                    button.btn.btn-success.mt-3.mb-5(type='submit') Enviar
+                    button.btn.btn-success.mt-3.mb-5 Enviar
 
-block producto
+            block producto
