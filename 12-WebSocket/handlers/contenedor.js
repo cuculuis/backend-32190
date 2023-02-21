@@ -3,7 +3,7 @@ const fs = require('fs');
 class Contenedor {
     constructor(fileName) {
         this.fileName = fileName;
-        this.id = 1;
+        this.lastId = 1;
         this.checkFileExists();
     }
     

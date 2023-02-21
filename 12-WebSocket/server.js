@@ -46,7 +46,7 @@ io.on("connection", async (socket) => {
     console.log('Se conectó un nuevo usuario');
 
     socket.emit("productos", productos);
-    socket.emit("mensajes", mensajes);
+    socket.emit("messages", mensajes);
 
 
     socket.on("newProduct", async (data) => {
@@ -56,7 +56,7 @@ io.on("connection", async (socket) => {
 
     socket.on("newMessage", async (data) => {
         await mensajesContenedor.save(data);
-        io.sockets.emit("mensajes", mensajes);
+        io.sockets.emit("messages", mensajes);
     });
 
     });

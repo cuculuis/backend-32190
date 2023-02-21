@@ -15,11 +15,11 @@ function updateProducts(table, productsArray) {
 
 function updateMessages(messagesArray) {
     const html = messagesArray.map(message => {
-    return `<div>
-        <span style="color: blue">${message.email}</span><span style="color: brown"> [${message.dateAndTime}] </span><span style="color: green">${message.message}</span>
+        return `<div class="alert alert-primary">
+            <span style="color: blue">${message.email}</span><span style="color: brown"> [${message.dateAndTime}] </span><span style="color: green">${message.message}</span>
         </div>`
-    }).join(" ")
-    document.getElementById("messagesMain").innerHTML = html;
+        }).join(" ")
+        document.getElementById("messagesMain").innerHTML = html;
 }
 
 function addProduct() {
@@ -35,8 +35,6 @@ function addProduct() {
     }
 
 function sendMessage() {
-    document.getElementById('add-message').addEventListener('submit', (event) => {
-        event.preventDefault();
         const message = {
             email: document.getElementById("email").value,
             dateAndTime: new Date(Date.now()).toLocaleString(),
@@ -44,9 +42,8 @@ function sendMessage() {
         }
 
         socket.emit("newMessage", message);
-            return
+            return;
         }
-    )}
 
 socket.on("productos", (data) => {
     data.length > 0
@@ -55,5 +52,7 @@ socket.on("productos", (data) => {
 });
 
 socket.on("messages", data => {
-    updateMessages(data);
+    data.length > 0 
+    ? updateMessages(data)
+    : (document.getElementById("messagesMain").innerHTML = `<h3 class="container alert alert-danger">NO HAY MENSAJES</h3>`);
 })
