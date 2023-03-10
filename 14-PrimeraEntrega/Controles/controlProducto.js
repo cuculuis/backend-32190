@@ -2,8 +2,13 @@ const contenedorProductos = require('./contenedor')
 
 const productos = new contenedorProductos('./DB/productos.txt');
 
-const getProductoById = async (res, req) => {
-    const producto = await productos.getById(parseInt(req.params.id));
+const getProductos = async (req, res) => {
+    const id = parseInt(req.params.id);
+    if (id === undefined) {
+        const allProductos = await productos.getAll();
+        res.json(allProductos)
+    }
+    const producto = await productos.getById(id);
     res.json(producto);
     }
 
@@ -34,7 +39,7 @@ const putProducto = async (req, res) => {
         stock : req.body.stock,
     }
 
-    res.json(await productos.updateById(parseInt(req.params.id, updateProducto)))
+    res.json(await productos.updateById(parseInt(req.params.id), updateProducto))
 }
 
 const deleteProducto = async (req, res) => {
@@ -42,7 +47,7 @@ const deleteProducto = async (req, res) => {
 }
 
 module.exports = {
-    getProductoById,
+    getProductos,
     postProducto,
     putProducto,
     deleteProducto

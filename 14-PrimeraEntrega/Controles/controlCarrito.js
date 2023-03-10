@@ -2,7 +2,7 @@ const contenedorCarrito = require('./contenedor')
 
 const carritos = new contenedorCarrito('./DB/carritos.txt');
 
-const getCarritoById = async (res, req) => {
+const getCarritoById = async (req, res) => {
         const carrito = await carritos.getById(parseInt(req.params.id));
         res.json(carrito);
     }
