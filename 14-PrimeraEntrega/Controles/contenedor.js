@@ -72,9 +72,9 @@ class Contenedor {
             
                 if (index === -1) throw new Error('Producto no encontrado');
             
-                data[index] = nuevoProducto;
+                data[index] = { ...nuevoProducto, id: id };
             
-                this.save(data)
+                await fs.promises.writeFile(this.fileName, JSON.stringify(data, null, 2))
             
                 return nuevoProducto;
                 } catch (error) {

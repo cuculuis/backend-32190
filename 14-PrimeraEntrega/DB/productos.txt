@@ -1,22 +1,32 @@
 [
   {
-    "timestamp": 1678414968485,
-    "nombre": "Mango",
+    "id": 1,
+    "timestamp": 1678425958158,
+    "nombre": "aiuda",
     "descripcion": "Fruta tropical",
-    "codigo": "123mango",
-    "precio": 200,
-    "foto": "mango.png",
-    "stock": 50,
-    "id": 1
+    "codigo": "123pera",
+    "precio": 100,
+    "foto": "pera.png",
+    "stock": 25
   },
   {
-    "timestamp": 1678417995356,
-    "nombre": "Pera",
+    "id": 2,
+    "timestamp": 1678425970648,
+    "nombre": "peldon",
+    "descripcion": "Fruta tropical",
+    "codigo": "123pera",
+    "precio": 100,
+    "foto": "pera.png",
+    "stock": 25
+  },
+  {
+    "timestamp": 1678425989731,
+    "nombre": "Wawawawawa",
     "descripcion": "Fruta tropical",
     "codigo": "123pera",
     "precio": 100,
     "foto": "pera.png",
     "stock": 25,
-    "id": 2
+    "id": 3
   }
 ]
