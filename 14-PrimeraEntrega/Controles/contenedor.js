@@ -72,7 +72,7 @@ class Contenedor {
             
                 if (index === -1) throw new Error('Producto no encontrado');
             
-                data[index] = {...nuevoProducto, id: id};
+                data[index] = nuevoProducto;
             
                 this.save(data)
             
