@@ -3,7 +3,7 @@ const fs = require('fs');
 class Contenedor {
     constructor(fileName) {
         this.fileName = fileName;
-        this.lastId = 1;
+        this.lastId = this.lastId;
         this.checkFileExists();
     }
     
@@ -56,6 +56,23 @@ class Contenedor {
             }
         }
 
+        async updateById(id, nuevoProducto) {
+            await this.checkFileExists()
+            try {
+                let data = await this.getAll();
+                const index = data.findIndex((producto) => producto.id === id);
+            
+                if (index === -1) throw new Error('Producto no encontrado');
+            
+                data = productos[index] = { id, timestamp: Date.now(), ...nuevoProducto };
+            
+                this.save(data)
+            
+                return nuevoProducto;
+                } catch (error) {
+                throw new Error(`Error al actualizar el producto: ${error}`);
+                }
+            }
 
 
         async getAll() {

@@ -1,0 +1,12 @@
+[
+  {
+    "timestamp": 1678414968485,
+    "nombre": "Mango",
+    "descripcion": "Fruta tropical",
+    "codigo": "123mango",
+    "precio": 200,
+    "foto": "mango.png",
+    "stock": 50,
+    "id": 1
+  }
+]

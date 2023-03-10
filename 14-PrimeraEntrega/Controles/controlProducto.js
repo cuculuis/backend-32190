@@ -1,38 +1,44 @@
 const contenedorProductos = require('./contenedor')
 
-const productos = new contenedorProductos('../DB/carrito.txt');
+const productos = new contenedorProductos('./DB/productos.txt');
 
-const getProductoById = (res, req) => {
-    id = req.params.id;
-
-    if (id === undefined) {
-        res("No hay producto con ese id")
-    } else {
-        const producto = productos.getById(id);
-        res(producto);
+const getProductoById = async (res, req) => {
+    const producto = await productos.getById(parseInt(req.params.id));
+    res.json(producto);
     }
-}
 
-const postProducto = (req, res) => {
+
+const postProducto = async (req, res) => {
     const newProducto = {
         timestamp : Date.now(),
-        nombre : request.body.nombre,
-        descripcion : request.body.descripcion,
-        codigo : request.body.codigo,
-        precio : request.body.precio,
-        foto : request.body.foto,
-        stock : request.body.stock,
+        nombre : req.body.nombre,
+        descripcion : req.body.descripcion,
+        codigo : req.body.codigo,
+        precio : req.body.precio,
+        foto : req.body.foto,
+        stock : req.body.stock,
     }
 
-    res(productos.save(newProducto))
+    res.json(await productos.save(newProducto))
 }
 
-const putProducto = (req, res) => {
+const putProducto = async (req, res) => {
+    const updateProducto = {
+        id : req.params.id,
+        timestamp : Date.now(),
+        nombre : req.body.nombre,
+        descripcion : req.body.descripcion,
+        codigo : req.body.codigo,
+        precio : req.body.precio,
+        foto : req.body.foto,
+        stock : req.body.stock,
+    }
 
+    res.json(await productos.updateById(parseInt(req.params.id, updateProducto)))
 }
 
-const deleteProducto = (req, res) => {
-    res(productos.deleteById(req.params.id))
+const deleteProducto = async (req, res) => {
+    res.json(await productos.deleteById(parseInt(req.params.id)))
 }
 
 module.exports = {
