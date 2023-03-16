@@ -1,4 +1,5 @@
-const contenedorCarrito = require('./contenedor')
+const contenedorCarrito = require('./contenedor');
+const controlProducto = require('./controlProducto');
 
 const carritos = new contenedorCarrito('./DB/carritos.txt');
 
@@ -14,6 +15,31 @@ const postCarrito = async (req, res) => {
     }
 
     res.json(await carritos.save(newCarrito))
+}
+
+const postProdCarrito = async (req, res) => {
+    const idCarrito = parseInt(req.params.id);
+    const idProducto = parseInt(req.params.id_prod);
+
+    try {
+        const carrito = await carritos.getCarritoById(idCarrito);
+        if (!carrito) {
+            throw new Error(`Carrito no encontrado`);
+        }
+        const productoId = await controlProducto.getProductos(idProducto)
+        if (!productoId){
+            throw new Error(`Producto no encontrado`);
+        }
+
+        const newCarrito = await carrito.productos.push(productoId)
+        await carritos.save(newCarrito);
+        
+        
+        res.json('Se ha borrado el siguiente producto: ' + borrado)
+
+    } catch (error) {
+    throw new Error(`No se pudo agregar al carrito con id ${idCarrito} el producto con id ${idProducto}: ${error}`)
+    }
 }
 
 const deleteCarrito = async (req, res) => {
@@ -42,6 +68,7 @@ const deletePrdCarrito = async (req, res) => {
 module.exports = {
     getCarritoById,
     postCarrito,
+    postProdCarrito,
     deleteCarrito,
     deletePrdCarrito
 }

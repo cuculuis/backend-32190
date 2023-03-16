@@ -1,32 +1,52 @@
 [
   {
-    "id": 1,
-    "timestamp": 1678425958158,
-    "nombre": "aiuda",
-    "descripcion": "Fruta tropical",
-    "codigo": "123pera",
-    "precio": 100,
-    "foto": "pera.png",
-    "stock": 25
-  },
-  {
-    "id": 2,
-    "timestamp": 1678425970648,
-    "nombre": "peldon",
-    "descripcion": "Fruta tropical",
-    "codigo": "123pera",
-    "precio": 100,
-    "foto": "pera.png",
-    "stock": 25
-  },
-  {
-    "timestamp": 1678425989731,
-    "nombre": "Wawawawawa",
+    "timestamp": 1678936961120,
+    "nombre": "Pera",
     "descripcion": "Fruta tropical",
     "codigo": "123pera",
     "precio": 100,
     "foto": "pera.png",
     "stock": 25,
+    "id": 1
+  },
+  {
+    "timestamp": 1678936979525,
+    "nombre": "Manzana",
+    "descripcion": "Fruta tropical",
+    "codigo": "123manzana",
+    "precio": 100,
+    "foto": "manzana.png",
+    "stock": 30,
+    "id": 2
+  },
+  {
+    "timestamp": 1678937005339,
+    "nombre": "Guanabana",
+    "descripcion": "Fruta tropical",
+    "codigo": "123guanabana",
+    "precio": 100,
+    "foto": "guanabana.png",
+    "stock": 5,
     "id": 3
+  },
+  {
+    "timestamp": 1678937022828,
+    "nombre": "Banana",
+    "descripcion": "Fruta tropical",
+    "codigo": "123banana",
+    "precio": 100,
+    "foto": "banana.png",
+    "stock": 50,
+    "id": 4
+  },
+  {
+    "timestamp": 1678937049870,
+    "nombre": "Kiwi",
+    "descripcion": "Fruta tropical",
+    "codigo": "123kiwi",
+    "precio": 100,
+    "foto": "kiwi.png",
+    "stock": 10,
+    "id": 5
   }
 ]

@@ -26,10 +26,11 @@ class Contenedor {
         }
 
         async save(object) {
-            await this.checkFileExists()
+            await this.checkFileExists();
             try {
                 let data = await this.getAll();
-                object.id = data.length + 1;
+                let lastId = data.length > 0 ? data[data.length - 1].id : 0;
+                object.id = lastId + 1;
                 data.push(object);
                 await fs.promises.writeFile(this.fileName, JSON.stringify(data, null, 2));
                 return object.id;
