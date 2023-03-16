@@ -5,7 +5,7 @@ const routerCarrito = express.Router();
 
 
 routerCarrito.post('/', postCarrito);
-routerCarrito.post(':id/producto/:id_prod', postProdCarrito);
+routerCarrito.post('/:id/producto/:id_prod', postProdCarrito);
 routerCarrito.delete('/:id', deleteCarrito);
 routerCarrito.get('/:id/productos', getCarritoById);
 routerCarrito.delete('/:id/productos/:id_prod', deletePrdCarrito);
