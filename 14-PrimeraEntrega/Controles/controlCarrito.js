@@ -22,7 +22,7 @@ const postProdCarrito = async (req, res) => {
     const idProducto = parseInt(req.params.id_prod);
 
     try {
-        const carrito = await carritos.getCarritoById(idCarrito);
+        const carrito = await getCarritoById(idCarrito);
         if (!carrito) {
             throw new Error(`Carrito no encontrado`);
         }
@@ -31,11 +31,22 @@ const postProdCarrito = async (req, res) => {
             throw new Error(`Producto no encontrado`);
         }
 
-        const newCarrito = await carrito.productos.push(productoId)
-        await carritos.save(newCarrito);
+        const ProductoEnCarrito = {
+            id: productoId.id,
+            timestamp: productoId.timestamp,
+            nombre: productoId.nombre,
+            descripcion: productoId.descripcion,
+            codigo: productoId.codigo,
+            foto: productoId.foto,
+            precio: productoId.precio,
+            stock: productoId.stock
+        }
         
+        carrito.productos.push(ProductoEnCarrito)
         
-        res.json('Se ha borrado el siguiente producto: ' + borrado)
+        await carritos.save(carrito);        
+        
+        res.json("Agregado: \n" + ProductoEnCarrito)
 
     } catch (error) {
     throw new Error(`No se pudo agregar al carrito con id ${idCarrito} el producto con id ${idProducto}: ${error}`)
