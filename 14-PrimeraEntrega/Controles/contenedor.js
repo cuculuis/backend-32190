@@ -47,7 +47,7 @@ class Contenedor {
                 if (object) {
                     return object;
                 } else {
-                    return null;
+                    return undefined;
                 }
             } catch (err) {
                 console.log('Hubo un error: ' + err);

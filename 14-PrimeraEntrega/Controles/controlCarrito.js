@@ -1,5 +1,5 @@
 const contenedorCarrito = require('./contenedor');
-const controlProducto = require('./controlProducto');
+const productos = require('./controlProducto');
 
 const carritos = new contenedorCarrito('./DB/carritos.txt');
 
@@ -19,37 +19,26 @@ const postCarrito = async (req, res) => {
 
 const postProdCarrito = async (req, res) => {
     const idCarrito = parseInt(req.params.id);
-    const idProducto = parseInt(req.params.id_prod);
+    const idProducto = parseInt(req.body.id_prod);
 
     try {
         const carrito = await getCarritoById(idCarrito);
         if (!carrito) {
-            throw new Error(`Carrito no encontrado`);
+            throw new Error(`No se encontró el carrito con id ${idCarrito}`);
         }
-        const productoId = await controlProducto.getProductos(idProducto)
+        const productoId = await productos.getById(idProducto)
         if (!productoId){
-            throw new Error(`Producto no encontrado`);
-        }
-
-        const ProductoEnCarrito = {
-            id: productoId.id,
-            timestamp: productoId.timestamp,
-            nombre: productoId.nombre,
-            descripcion: productoId.descripcion,
-            codigo: productoId.codigo,
-            foto: productoId.foto,
-            precio: productoId.precio,
-            stock: productoId.stock
+            throw new Error(`No se encontró el producto con id ${idProducto}`);
         }
         
-        carrito.productos.push(ProductoEnCarrito)
+        carrito.productos.push(productoId)
         
-        await carritos.save(carrito);        
+        await carritos.updateById(idCarrito, carrito);        
         
-        res.json("Agregado: \n" + ProductoEnCarrito)
+        res.json("Agregado: \n" + productoId)
 
     } catch (error) {
-    throw new Error(`No se pudo agregar al carrito con id ${idCarrito} el producto con id ${idProducto}: ${error}`)
+    throw new Error('No se pudo agregar al carrito con id:' + idCarrito + 'el producto con id:' + idProducto + ': ' + error)
     }
 }
 
