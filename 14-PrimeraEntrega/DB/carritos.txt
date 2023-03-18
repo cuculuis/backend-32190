@@ -1,12 +1,28 @@
 [
   {
     "timestamp": 1678937197180,
-    "productos": [],
+    "productos": [
+      {
+        "timestamp": 1678936979525,
+        "nombre": "Manzana",
+        "descripcion": "Fruta tropical",
+        "codigo": "123manzana",
+        "precio": 100,
+        "foto": "manzana.png",
+        "stock": 30,
+        "id": 2
+      },
+      {
+        "timestamp": 1678937005339,
+        "nombre": "Guanabana",
+        "descripcion": "Fruta tropical",
+        "codigo": "123guanabana",
+        "precio": 100,
+        "foto": "guanabana.png",
+        "stock": 5,
+        "id": 3
+      }
+    ],
     "id": 1
-  },
-  {
-    "timestamp": 1678937201318,
-    "productos": [],
-    "id": 2
   }
 ]

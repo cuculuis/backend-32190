@@ -2,6 +2,10 @@ const contenedorProductos = require('./contenedor')
 
 const productos = new contenedorProductos('./DB/productos.txt');
 
+const getAllProductos = async (req, res) => {
+    res.json(await productos.getAll());
+}
+
 const getProductos = async (req, res) => {
     const id = parseInt(req.params.id);
     if (id === undefined) {
@@ -48,6 +52,7 @@ const deleteProducto = async (req, res) => {
 
 module.exports = {
     productos,
+    getAllProductos,
     getProductos,
     postProducto,
     putProducto,

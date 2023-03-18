@@ -1,5 +1,5 @@
 const contenedorCarrito = require('./contenedor');
-const productos = require('./controlProducto');
+const controlProducto = require('./controlProducto');
 
 const carritos = new contenedorCarrito('./DB/carritos.txt');
 
@@ -18,27 +18,28 @@ const postCarrito = async (req, res) => {
 }
 
 const postProdCarrito = async (req, res) => {
+    const idProducto = parseInt(req.params.id_prod);
     const idCarrito = parseInt(req.params.id);
-    const idProducto = parseInt(req.body.id_prod);
-
+    
     try {
-        const carrito = await getCarritoById(idCarrito);
+
+        const carrito = await carritos.getById(idCarrito);
         if (!carrito) {
-            throw new Error(`No se encontró el carrito con id ${idCarrito}`);
+            res.json(`No se encontró el carrito con id ${idCarrito}`);
         }
-        const productoId = await productos.getById(idProducto)
+        const productoId = await controlProducto.productos.getById(idProducto)
         if (!productoId){
-            throw new Error(`No se encontró el producto con id ${idProducto}`);
+            res.json(`No se encontró el producto con id ${idProducto}`);
         }
         
-        carrito.productos.push(productoId)
+        await carrito.productos.push(productoId)
         
         await carritos.updateById(idCarrito, carrito);        
         
-        res.json("Agregado: \n" + productoId)
+        res.json("Se agregó el producto con id: " + JSON.stringify(productoId.id))
 
     } catch (error) {
-    throw new Error('No se pudo agregar al carrito con id:' + idCarrito + 'el producto con id:' + idProducto + ': ' + error)
+        res.json('No se pudo agregar al carrito con id: ' + idCarrito + ' el producto con id: ' + idProducto + ': ' + error)
     }
 }
 
@@ -51,14 +52,16 @@ const deletePrdCarrito = async (req, res) => {
     const idCarrito = parseInt(req.params.id);
 
     try {
-            const carrito = await carritos.getCarritoById(idCarrito);
+            const carrito = await carritos.getById(idCarrito);
             const index = carrito.productos.findIndex((prod) => prod.id === idProducto);
             if (index === -1) {
                 throw new Error(`El producto con id ${idProducto} no se encuentra en el carrito n°: ${idCarrito}`);
             }
-            const borrado = carrito.productos.splice(index, 1);
+            await carrito.productos.splice(index, 1);
+
+            await carritos.updateById(idCarrito, carrito)
             
-            res.json('Se ha borrado el siguiente producto: ' + borrado)
+            res.json('Se ha borrado el siguiente producto con el id: ' + idProducto)
 
         } catch (error) {
         throw new Error(`No se pudo eliminar el producto del carrito con id ${idCarrito} y idProducto ${idProducto}: ${error}`)
