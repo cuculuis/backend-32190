@@ -56,13 +56,22 @@ io.on("connection", async (socket) => {
 
     socket.on("newProduct", async (data) => {
         await prodSQL.insertarArticulos(data);
+        productos = await dbProductos();
         io.sockets.emit('productos', productos);
     });
 
     socket.on("newMessage", async (data) => {
         await chatSQL.insertarArticulos(data);
+        mensajes = await dbMensajes();
         io.sockets.emit("messages", mensajes);
     });
+
+    socket.on("disconnect", async socket => {
+        console.log("desconcetado")
+        await prodSQL.close()
+        await chatSQL.close()
+        console.log("desconcetado")
+    })
 
     });
 

@@ -20,8 +20,8 @@ class ContainerChat {
         })
 }
 
-    insertarArticulos(articulos) {
-        return this.knex('chat').insert(articulos)
+    insertarArticulos(obj) {
+        return this.knex('chat').insert(obj)
     }
 
     listarArticulos() {

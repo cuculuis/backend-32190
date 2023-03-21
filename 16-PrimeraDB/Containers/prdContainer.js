@@ -20,8 +20,8 @@ class PrdContainer {
         }
 
 
-    insertarArticulos(articulos) {
-        return this.knex('productos').insert(articulos)
+    insertarArticulos(obj) {
+        return this.knex('productos').insert(obj)
     }
 
     listarArticulos() {

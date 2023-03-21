@@ -32,7 +32,7 @@ function addProduct() {
 
 
     socket.emit("newProduct", product);
-    return false;
+    return;
     }
 
 function sendMessage() {
@@ -43,7 +43,7 @@ function sendMessage() {
         }
 
         socket.emit("newMessage", message);
-            return false;
+            return;
         }
 
 socket.on("productos", (data) => {
