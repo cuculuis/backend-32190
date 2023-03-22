@@ -66,13 +66,6 @@ io.on("connection", async (socket) => {
         io.sockets.emit("messages", mensajes);
     });
 
-    socket.on("disconnect", async socket => {
-        console.log("desconcetado")
-        await prodSQL.close()
-        await chatSQL.close()
-        console.log("desconcetado")
-    })
-
     });
 
 
