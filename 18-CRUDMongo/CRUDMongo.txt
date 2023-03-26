@@ -1,0 +1,28 @@
+0- Primero creamos la DB "ecommerce" y creamos dos colecciones "mensajes" y "productos" (Con el punto 1 creamos las colecciones).
+
+1- db.productos.insertMany([
+    {nombre: "Manzana", precio: 300, thumbnail: "https://manzana.com", stock: 100}, 
+    {nombre: "Camisa", precio: 2500, thumbnail: "https://camisa.com", stock: 20}, 
+    {nombre: "Zapatos", precio: 4500, thumbnail: "https://zapatos.com", stock: 10}, 
+    {nombre: "Libro", precio: 1500, thumbnail: "https://libro.com", stock: 30}, 
+    {nombre: "Cámara", precio: 4900, thumbnail: "https://camara.com", stock: 5}, 
+    {nombre: "Cafetera", precio: 3500, thumbnail: "https://cafetera.com", stock: 15}, 
+    {nombre: "Botella de vino", precio: 900, thumbnail: "https://vinoteca.com", stock: 25}, 
+    {nombre: "Silla de oficina", precio: 2800, thumbnail: "https://silla.com", stock: 7}, 
+    {nombre: "Sábanas", precio: 1100, thumbnail: "https://sabanas.com", stock: 40}, 
+    {nombre: "Cepillo", precio: 600, thumbnail: "https://cepillo.com", stock: 12}
+    ])
+
+db.mensajes.insertMany([
+    {email: "maria@hotmail.com", message: "¡Hola a todos!", timestamp: ISODate()},
+    {email: "juan@yahoo.com", message: "¿Qué tal estás?", timestamp: ISODate()},
+    {email: "ana@gmail.com", message: "¿Han visto la nueva película?", timestamp: ISODate()},
+    {email: "carlos@hotmail.com", message: "Necesito ayuda con este proyecto", timestamp: ISODate()},
+    {email: "lucia@yahoo.com", message: "¿Ana, podrías reservar una mesa en el restaurante?", timestamp: ISODate()},
+    {email: "pablo@gmail.com", message: "Juan, te espero en el parque a las 4 pm", timestamp: ISODate()},
+    {email: "ana@yahoo.com", message: "Feliz cumpleaños Carlos, espero que tengas un gran día", timestamp: ISODate()},
+    {email: "jose@hotmail.com", message: "Gracias por tu ayuda ana, te lo agradezco mucho", timestamp: ISODate()},
+    {email: "raquel@gmail.com", message: "No puedo creer que hayamos pasado tanto tiempo juntos", timestamp: ISODate()},
+    {email: "carla@yahoo.com", message: "Estoy emocionada por nuestra próxima reunión", timestamp: ISODate()}
+])
+
