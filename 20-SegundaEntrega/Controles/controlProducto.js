@@ -1,4 +1,5 @@
 const ProductosDAO = require('../Contenedores/contenedorMongo');
+const Productos = require('../Modules/modules')
 
 const productos = new ProductosDAO();
 
@@ -18,7 +19,7 @@ const getProductos = async (req, res) => {
 
 
 const postProducto = async (req, res) => {
-    const newProducto = {
+    const newProducto = new Productos({
         timestamp : Date.now(),
         nombre : req.body.nombre,
         descripcion : req.body.descripcion,
@@ -26,9 +27,11 @@ const postProducto = async (req, res) => {
         precio : req.body.precio,
         foto : req.body.foto,
         stock : req.body.stock,
-    }
+    })
 
-    res.json(await productos.save(newProducto))
+    const producto = await newProducto.save()
+
+    res.json(await producto)
 }
 
 const putProducto = async (req, res) => {
@@ -51,7 +54,6 @@ const deleteProducto = async (req, res) => {
 }
 
 module.exports = {
-    productos,
     getAllProductos,
     getProductos,
     postProducto,

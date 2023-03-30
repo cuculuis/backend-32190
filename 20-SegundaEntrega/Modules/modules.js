@@ -26,16 +26,14 @@ const productoSchema = new mongoose.Schema({
         max: 6,
         unique: true
     },
-    foto: {
-        type: String
-    },
     stock: {
         type: Number,
         required: true,
         max: 5000
+    },
+    foto: {
+        type: String
     }
 })
 
-const productosModel = mongoose.model('Productos', productoSchema)
-
-module.exports = productosModel;
+module.exports = mongoose.model('Productos', productoSchema)

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { productosModel } = require('../Modules/modules');
+const productosModel = require('../Modules/modules');
 
 class ProductosDAO {
     
@@ -16,7 +16,9 @@ class ProductosDAO {
 
         async save(object) {
             try {
-                return await productosModel.save(object);
+                const nuevoProducto = new productosModel(object)
+                await nuevoProducto.save();
+                return nuevoProducto
             } catch (err) {
                 console.log('Hubo un error: ' + err);
             }
@@ -24,7 +26,7 @@ class ProductosDAO {
 
         async getById(id) {
             try {
-                await productosModel.findById(parseInt(id))
+                await productosModel.findOne({ [this.ID_FIELD] : parseInt(id)})
             } catch (err) {
                 console.log('Hubo un error: ' + err);
             }
@@ -32,7 +34,7 @@ class ProductosDAO {
     
         async deleteById(id) {
             try {
-                return await productosModel.findByIdAndDelete({[this.ID_FIELD] : id})
+                return await productosModel.deleteOne({[this.ID_FIELD] : parseInt(id)})
             } catch (err) {
                 console.log(err);
             }
@@ -40,14 +42,13 @@ class ProductosDAO {
 
         async updateById(id, nuevoProducto) {
             try {
-                await productosModel.findByIdAndUpdate(
+                await productosModel.updateOne(
                     {
                         [this.ID_FIELD] : id,
                     }, 
-                    nuevoProducto,
-                    { runValidators: true }
+                    { $set: nuevoProducto }
                 )
-                return nuevoProducto
+                return this.ID_FIELD
                 } catch (error) {
                 throw new Error(`Error al actualizar el producto: ${error}`);
                 }
