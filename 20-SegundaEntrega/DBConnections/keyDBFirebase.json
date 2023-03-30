@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mysticshop-2b2e9",
+  "private_key_id": "233c74a9c0a733f77a498b9ab0a7999ae767a775",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC2WRsxGL/bfjWU\nIZ8hFSiCpMu4Z1DUfrG4j8kpVkQZ5AanbinMrl7BuBOGWZnduGEJ4T9cloRbtd6x\nzGor5Ca4v9U4CK2C1mV8PeUprlU9zeAms4Xu/9w7Q0l6yCRVTCkEwsBBph3UfMhJ\nyUUJYJCLZ4VvqOBGKUsZj4yFUf0eqXKDXJEhnFtg9IbEPi0Lyjcx7fIX+OuHWGMo\nlNDPL7VJSIS4sLA+XU8pVHEro+Vqp+ghvP1I194PothrL6ameBUiICH/ZfEPeP+8\nik2U2DN1tqz6i3hF21fKAu6YGiDiO2IZQ9seSW0KPwTiSkEGGSQDB/m4uHMXYPDW\npSaSoENBAgMBAAECggEAAIo6YfKF4Gpy8gqosghSEbN3WTcgmpV6tR5DYSqEynsV\n8DVbvTP7urj+4U4m/gyliGoE5hM5xnv/EiGV46YB/ZhvUyJ28ZENFUFpah5+mP+Q\n4Sp1TEIwkrIZ/8mjjmdapH2HZFZfpp09Olc0y7CgEvKaNvy998U36EYoG021KTvj\nzyK+3tNLsGHknIMy41egmNxOhzIUYxu42jlRm6Lt66bJGsGkSR6EWAF4B8Uy/0jK\nUi03VEkn0PtAteIwdSAbwrDzrcLKJmIRDp7Lo4qxcvr+JDrvZmra4UtT7fHzJPcM\n3BXuoTO2AvX41oce2oISW6a1ZnisGrRMcdk87u3EMQKBgQDncr7TXYzFoSaYvtQX\nQbZnUXpqRUem0A1mNLfnUHIbWIXhxB6uG+ItqO7rAZrZIa1n0HMfwYj+izdmQeV4\nbLrZ18prKpcQ6SCNdKlGv1I4fDzOjaBxZiCTU+bPRHvyWVxlHniOff9EPl5dRVEx\ndNs/skxykKEBn2uQaLNJHC6pMQKBgQDJsPy2f9KOAvk5Fznm56fisNdGMQkMZ1bp\nkPJ841wnzwPDIxNlTgbDezPCse+hiXxMv7gsLl39wn58SZOajxFlcCU92OPFIF70\ny9Mp13n0er+Kh4erokyjHtpyPRqkYd0of2Wv4Y0SjmSr5pIoYRvFL5VJacoB6jGy\nWmk1DKW3EQKBgEBjM6Mpi1gPlOU5cVdm+I+VozCdRWmqx49/awn230esQNKl9MML\nDskVDiJit+lf7RXMb7qN5MarhCX2fxgZZ4Hi/nUBzDTwJhY0NkNwRjdgmKn9zHy/\npKBX3wYaT0EEiye2amN5ueIKV8Yq2oOftr7po0rb4W7KIupxti7IoFKBAoGAAUME\nMbgW/yBxorPMfu9QE5D7p8rCvbsfxhJMEg/yEaWv5laf1nBohmyM5FjsoNwVVP2W\nD2Cy4dWHqQtkywC+IR5UfVCQDDmpnmpwBcD9WFQ0Qo+af65iQFr/DtvnAMRD9+7k\nGfeVRFpzssecfngtDky/6FerFdv7N5xtMBHGL6ECgYBQJVflwx7r+wbKCgVrLmUs\nCi24jyY/ic3NgqgcCMCK6/QxjXkU9PcdryHWcZD6u0cmEoT1z60zwh+YljbTeYxg\nHl/PW7NKRuMVoSMZab3vpWxEByde5wEY3KtA5buGbq78o2krZqDYXk0Dfws1sv3p\n7Xw+4JBi/LH48y7TZXArpw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-76sps@mysticshop-2b2e9.iam.gserviceaccount.com",
+  "client_id": "110608492818278325860",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-76sps%40mysticshop-2b2e9.iam.gserviceaccount.com"
+}
