@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const { cliente } = require('../DBConnections/mongoConnection')
 
 const productoSchema = new mongoose.Schema({
-
+    
     nombre: {
         type: String,
         required: true,
@@ -9,7 +10,7 @@ const productoSchema = new mongoose.Schema({
     },
     timestamp: {
         type: Date,
-        default: Date.now
+        default: new Date()
     },
     precio: {
         type: Number,
@@ -36,4 +37,6 @@ const productoSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Productos', productoSchema)
+const productosModel = mongoose.model('Productos', productoSchema)
+
+module.exports = productosModel;
