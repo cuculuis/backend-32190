@@ -5,7 +5,7 @@ const carritos = new CarritoDAO('carrito');
 const products = new ProductosDAO();
 
 const getCarritoById = async (req, res) => {
-        const carrito = await carritos.getCarritoById(parseInt(req.params.id));
+        const carrito = await carritos.getCarritoById(req.params.id);
         res.json(carrito);
     }
 
@@ -19,8 +19,8 @@ const postCarrito = async (req, res) => {
 }
 
 const postProdCarrito = async (req, res) => {
-    const idProducto = parseInt(req.params.id_prod);
-    const idCarrito = parseInt(req.params.id);
+    const idProducto = req.params.id_prod;
+    const idCarrito = req.params.id;
     
     try {
 
@@ -33,11 +33,11 @@ const postProdCarrito = async (req, res) => {
             res.json(`No se encontró el producto con id ${idProducto}`);
         }
         
-        await carritos.productos.push(productoId)
+        const nuevoCarrito = await carrito.productos.push(productoId)
+
+        await carritos.updateById(idCarrito, nuevoCarrito);        
         
-        await carritos.updateById(idCarrito, carrito);        
-        
-        res.json("Se agregó el producto con id: " + JSON.stringify(productoId.id))
+        res.json("Se agregó el producto con id: " + JSON.stringify(productoId._id))
 
     } catch (error) {
         res.json('No se pudo agregar al carrito con id: ' + idCarrito + ' el producto con id: ' + idProducto + ': ' + error)
@@ -45,12 +45,12 @@ const postProdCarrito = async (req, res) => {
 }
 
 const deleteCarrito = async (req, res) => {
-    res.json(await carritos.deleteById(parseInt(req.params.id)))
+    res.json(await carritos.deleteById(req.params.id))
 }
 
 const deletePrdCarrito = async (req, res) => {
-    const idProducto = parseInt(req.params.id_prod);
-    const idCarrito = parseInt(req.params.id);
+    const idProducto = req.params.id_prod;
+    const idCarrito = req.params.id;
 
     try {
             const carrito = await carritos.getCarritoById(idCarrito);

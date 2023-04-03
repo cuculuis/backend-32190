@@ -22,8 +22,7 @@ class ProductosDAO {
             try {
                 const nuevoProducto = new productosModel(object)
                     
-                await nuevoProducto.save()
-                console.log(`Producto ${nuevoProducto.nombre} creado exitosamente`);
+                return await nuevoProducto.save()
             } catch(error) {
                 console.log('Error al crear el producto. ' + err)
             }
@@ -43,8 +42,7 @@ class ProductosDAO {
         async deleteById(id) {
             try {
                 await productosModel.findByIdAndDelete({[this.ID_FIELD] : id})
-                console.log(`Producto con id: ${id} eliminado exitosamente`);
-                return id
+                return `Producto con id: ${id} eliminado exitosamente`
             } catch (err) {
                 console.log('Hubo un error: ' + err)
             }
@@ -53,7 +51,7 @@ class ProductosDAO {
         async updateById(id, nuevoProducto) {
             try {
                 await productosModel.findByIdAndUpdate({[this.ID_FIELD] : id}, nuevoProducto)
-                console.log(`Producto con id ${id} actualizado exitosamente`);
+                return `Producto con id ${id} actualizado exitosamente`
             } catch(err) {
                 console.log(`Error al actualizar el producto: ${err}`)
             }

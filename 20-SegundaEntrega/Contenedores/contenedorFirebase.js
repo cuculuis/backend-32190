@@ -15,17 +15,6 @@ class CarritoDAO {
         }
     }
 
-    async getAll() {
-        try {
-            const prods = await this.query.get()
-            const allprods = []
-            prods.forEach((doc) => allprods.push(doc.data()))
-            return allprods
-        } catch (error) {
-            throw new Error(error)
-        }
-    }
-
     async getCarritoById(id) {
         try {
             const carritoId = await this.query.doc(id).get()
@@ -36,10 +25,11 @@ class CarritoDAO {
         }
     }
 
-    async updateById(obj) {
+    async updateById(idCarrito, obj) {
         try {
-            const prodUp = await this.query.doc(obj.id).update(obj)
+            const prodUp = await this.query.doc(idCarrito).update(obj)
             return prodUp
+
         } catch (error) {
             throw new Error(error)
         }
