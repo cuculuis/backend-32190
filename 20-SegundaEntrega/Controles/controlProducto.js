@@ -8,7 +8,7 @@ const getAllProductos = async (req, res) => {
 }
 
 const getProductos = async (req, res) => {
-    const id = parseInt(req.params.id);
+    const id = req.params.id
     if (id === undefined) {
         const allProductos = await productos.getAll();
         res.json(allProductos)
@@ -46,11 +46,11 @@ const putProducto = async (req, res) => {
         stock : req.body.stock,
     }
 
-    res.json(await productos.updateById(parseInt(req.params.id), updateProducto))
+    res.json(await productos.updateById(req.params.id, updateProducto))
 }
 
 const deleteProducto = async (req, res) => {
-    res.json(await productos.deleteById(parseInt(req.params.id)))
+    res.json(await productos.deleteById(req.params.id))
 }
 
 module.exports = {

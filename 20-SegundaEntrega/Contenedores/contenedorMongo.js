@@ -4,6 +4,8 @@ const productosModel = require('../Modules/modules');
 
 class ProductosDAO {
 
+    ID_FIELD = "_id";
+
         async getAll() {
             try {
                 const productos = await productosModel.find();
@@ -29,8 +31,10 @@ class ProductosDAO {
 
         async getById(id) {
             try {
-                const productoid = await productosModel.findById(new mongoose.Types.ObjectId(id))
-                return productoid
+                const productoid = await productosModel.findOne({
+                    [this.ID_FIELD] : id
+                })
+                return productoid;
             } catch (error) {
                 console.error(`Error al obtener producto con id ${id}`, error);
             }
@@ -38,8 +42,9 @@ class ProductosDAO {
     
         async deleteById(id) {
             try {
-                productosModel.findByIdAndDelete(id)
+                await productosModel.findByIdAndDelete({[this.ID_FIELD] : id})
                 console.log(`Producto con id: ${id} eliminado exitosamente`);
+                return id
             } catch (err) {
                 console.log('Hubo un error: ' + err)
             }
@@ -47,7 +52,7 @@ class ProductosDAO {
 
         async updateById(id, nuevoProducto) {
             try {
-                await productosModel.findByIdAndUpdate(id, nuevoProducto)
+                await productosModel.findByIdAndUpdate({[this.ID_FIELD] : id}, nuevoProducto)
                 console.log(`Producto con id ${id} actualizado exitosamente`);
             } catch(err) {
                 console.log(`Error al actualizar el producto: ${err}`)
