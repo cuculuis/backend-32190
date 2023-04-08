@@ -1,33 +1,26 @@
-const { Router } = require('express');
-const { faker } = require('@faker-js/faker');
+const express = require('express');
+const { faker } = require('@faker-js/faker');   
 const { crearUsuario, getUsuario, salir } = require('../Controles/ingresar')
 faker.locale = 'es';
 
 
-const ingresar = Router();
+const ingresar = express.Router()
 
-ingresar.get('/', getUsuario)
-ingresar.post('/', crearUsuario)
+ingresar.get('/ingresar', getUsuario)
+ingresar.post('/ingresar', crearUsuario)
 ingresar.get('/salir', salir)
 
 
-const productosTest = Router();
+const productosTest = express.Router()
 
-if (usuario === null || usuario === undefined){
-    productosTest.get('/', (req, res) => {
-        res.status(401).send({Error: -1, descripción: `La ruta ${req.path} y el método ${req.method} no autorizado.`});
-    });
-} else {
-    productosTest.get('/', (req, res) => {
-        let mensajes = []
-        for (let i = 0; i < 5; i++) {
-            mensajes.push(crearProducto(i+1))
-        }
+productosTest.get('/', (req, res) => {
+    let mensajes = []
+    for (let i = 0; i < 5; i++) {
+        mensajes.push(crearProducto(i+1))
+    }
     
-        res.render('body', {mensajes})
-    })
-}
-
+    res.render('body', {mensajes})
+})
 
 
 function crearProducto (id) {

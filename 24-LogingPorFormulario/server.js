@@ -2,10 +2,10 @@ const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo');
-const ingresar = require('./routers/test');
 const { Server: HttpServer } = require('http');
 const { Server: IOServer } = require('socket.io');
-const productoTest = require('./routers/test')
+const ingresar = require('./routers/test')
+const productosTest = require('./routers/test')
 const { normalize, denormalize, schema } = require('normalizr');
 const util = require ('util');
 const Container = require('./contenedor/contenedor');
@@ -31,8 +31,20 @@ app.use(session({
     cookie: {maxAge: 60000}
 }))
 
-app.use('/api/productos-test', productoTest)
-app.use('/ingresar', ingresar)
+const checkAuthentication = (req, res, next) => {
+    if (req.session.user) {
+        next();
+    } else {
+        res.redirect('/api/ingresar');
+    }
+};
+
+
+app.use('/api/productos-test', checkAuthentication, productosTest)
+productosTest.use(checkAuthentication)
+
+app.use('/api', ingresar)
+
 
 app.set('view engine', 'ejs')
 

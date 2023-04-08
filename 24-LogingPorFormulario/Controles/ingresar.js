@@ -1,12 +1,8 @@
 
+
+
 const getUsuario = (req, res) => {
-    const usuario = req.session.text;
-    
-    if (usuario === null || usuario === undefined) {
-        res.render('loginForm');
-    } else {
-        res.redirect('body');
-    }
+    res.render('login');
 };
 
 const crearUsuario = (req, res) => {
