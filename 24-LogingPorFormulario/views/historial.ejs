@@ -1,0 +1,26 @@
+<h3 style="color:blue;">PRODUCTOS</h3>
+
+<% if(mensajes.length > 0){ %>
+    <div class="table-responsive">
+        <table class="table table-dark">
+            <tr style="color: yellow;"> 
+                <th>Nombre</th> 
+                <th>Descripcion</th> 
+                <th>Precio</th> 
+                <th>Imagen</th> 
+            </tr>
+            <% for (const producto of mensajes) {%>
+            <tr>
+                <td><%=producto.nombre%></td>
+                <td><%=producto.descripcion%></td>
+                <td><%=producto.precio%></td>
+                <td><%=producto.foto%></td>
+            </tr>
+            <%};%>
+        </table>
+    </div>
+<% } else{ %>
+    <h3 class="alert alert-danger">No se encontraron datos</h3>
+<% } %>
+
+<p id="messages"></p>
