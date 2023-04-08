@@ -4,20 +4,20 @@ const { faker } = require('@faker-js/faker');
 faker.locale = 'es';
 
 
-const ingresar = express.Router()
+const productosTest = express.Router()
 
-ingresar.get('/ingresar', (req, res, next) => {
+productosTest.get('/ingresar', (req, res) => {
     res.render('login');
 })
 
-ingresar.post('/ingresar', (req, res, next) => {
+productosTest.post('/ingresar', (req, res) => {
     const usuario = req.body.text;
     
     req.session.text = usuario;
-    res.redirect('body');
+    res.redirect('/api/productos-test');
 })
 
-ingresar.post('/salir', (req, res) => {
+productosTest.get('/salir', (req, res) => {
     const usuario = req.session.text;
     const despedida = `Hasta luego ${usuario}`;
     req.session.destroy((err) => {
@@ -29,18 +29,18 @@ ingresar.post('/salir', (req, res) => {
     });
 })
 
-
-const productosTest = express.Router()
-
 productosTest.get('/', (req, res) => {
     const user = req.session.text
-    let mensajes = []
-    for (let i = 0; i < 5; i++) {
-        mensajes.push(crearProducto(i+1))
+    if (user) {
+        let mensajes = []
+        for (let i = 0; i < 5; i++) {
+            mensajes.push(crearProducto(i+1))
+        }
+        res.render('body', { mensajes, user});
+    } else {
+        res.redirect('/api/productos-test/ingresar');
     }
-    
-    res.render('body', {user, mensajes})
-})
+    })
 
 
 function crearProducto (id) {
@@ -53,4 +53,4 @@ function crearProducto (id) {
     }
 }
 
-module.exports = productosTest, ingresar;
+module.exports = productosTest;

@@ -13,14 +13,14 @@
     <body>
         <div class="container mt-3">
             <div class="jumbotron">
-
-                <p><%=despedida%></p>
-
+                <div class="d-flex justify-content-start">
+                    <h3><%=despedida%></h3>
+                </div>
             </div>
         </div>
         <script>
             setTimeout(function () {
-                window.location.href = "/ingresar"
+                window.location.href = "/api/productos-test/ingresar"
             }, 2000)
         </script>
     </body>

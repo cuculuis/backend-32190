@@ -4,8 +4,6 @@ const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo');
 const { Server: HttpServer } = require('http');
 const { Server: IOServer } = require('socket.io');
-const path = require('path');
-const ingresar = require('./routers/test');
 const productosTest = require('./routers/test');
 const { normalize, denormalize, schema } = require('normalizr');
 const util = require ('util');
@@ -32,21 +30,16 @@ app.use(session({
     cookie: {maxAge: 60000}
 }))
 
-const checkAuthentication = (req, res, next) => {
-    if (!req.session.user) {
-        return res.redirect('/log/ingresar');
-    } else {
-        next();
-    }
-};
 
-
-app.use('/api/productos-test', checkAuthentication, productosTest)
-app.use('/log', ingresar)
-
-
-app.set('views', path.join(__dirname, 'views'));
+app.use('/api/productos-test', productosTest);
 app.set('view engine', 'ejs')
+
+app.get('*', (req, res) => {
+    const ruta = req.path;
+    const metodo = req.method;
+    res.send({Error: -1, descripción: `La ruta ${ruta} y el método ${metodo} no autorizado.`});
+})
+
 
 
 const chat = new Container();
