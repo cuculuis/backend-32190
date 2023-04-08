@@ -11,7 +11,15 @@
 
     <body>
         <div class="container mt-3">
-
+            <div class="alert alert-primary">
+                <div class="d-flex justify-content-start">
+                    <h3>¡Bienvenido <%= user %>!</h3>
+                </div>
+                    <form class="d-flex justify-content-end" action="/log/salir" method="get" >
+                        <button class="btn btn-warning">Log out</button>
+                    </form>
+                </div>
+            </div>
             <div class="container mt-3 d-flex justify-content-center flex-column align-items-center">
                 <%- include('./historial')-%>
             </div>
@@ -23,10 +31,5 @@
         </div>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/main.js"></script>
-        <script>
-            setTimeout(function () {
-                window.location.href = "/api/ingresar"
-            }, 2000)
-        </script>
     </body>
 </html>

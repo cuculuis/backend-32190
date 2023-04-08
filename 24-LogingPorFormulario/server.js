@@ -4,8 +4,9 @@ const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo');
 const { Server: HttpServer } = require('http');
 const { Server: IOServer } = require('socket.io');
-const ingresar = require('./routers/test')
-const productosTest = require('./routers/test')
+const path = require('path');
+const ingresar = require('./routers/test');
+const productosTest = require('./routers/test');
 const { normalize, denormalize, schema } = require('normalizr');
 const util = require ('util');
 const Container = require('./contenedor/contenedor');
@@ -32,20 +33,19 @@ app.use(session({
 }))
 
 const checkAuthentication = (req, res, next) => {
-    if (req.session.user) {
-        next();
+    if (!req.session.user) {
+        return res.redirect('/log/ingresar');
     } else {
-        res.redirect('/api/ingresar');
+        next();
     }
 };
 
 
 app.use('/api/productos-test', checkAuthentication, productosTest)
-productosTest.use(checkAuthentication)
-
-app.use('/api', ingresar)
+app.use('/log', ingresar)
 
 
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs')
 
 
